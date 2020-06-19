@@ -100,6 +100,8 @@ class LoginState {
       isFailure: $isFailure,
     }''';
   }
+
+  //lanjut ke login event jgn lupa
 }
 
 //class LoginInitial extends LoginState {}

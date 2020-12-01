@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/user_repository.dart';
-import 'package:flutter_firebase_login/authentication_bloc/bloc.dart';
-import 'package:flutter_firebase_login/login/login.dart';
+import 'package:new_app/user_repository.dart';
+import 'package:new_app/authentication_bloc/bloc.dart';
+import 'package:new_app/login/login.dart';
 
 class LoginForm extends StatefulWidget {
   final UserRepository _userRepository;
@@ -11,12 +11,12 @@ class LoginForm extends StatefulWidget {
     : assert(userRepository != null),_userRepository = userRepository,
     super(key: key);
 
-    State<LoginForm> createState() => _loginFormState();
+    State<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm>{
-  final TextEditignController _emailController = TextEditingController();
-  final TextEditignController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   LoginBloc _loginBloc;
 

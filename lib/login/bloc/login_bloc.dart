@@ -9,17 +9,17 @@ import 'package:new_app/user_repository.dart';
 import 'package:new_app/validators.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
- UserRepository _userRepository;
+  UserRepository _userRepository;
 
- LoginBloc({
-   @required UserRepository userRepository,
- }) : assert(userRepository != null), _userRepository = userRepository;
+  LoginBloc({
+    @required UserRepository userRepository,
+  })  : assert(userRepository != null),
+        _userRepository = userRepository;
 
   @override
   LoginState get initialState => LoginState.empty();
 
   @override
-
   Stream<LoginState> transform(
     Stream<LoginEvent> events,
     Stream<LoginState> Function(LoginEvent event) next,
@@ -37,36 +37,37 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    if (event is EmailChanged){
+    if (event is EmailChanged) {
       yield* _mapEmailChangedToState(event.email);
-    } else if (event is PasswordChanged){
-      yield* _mapPasswordChangedToState(event.password);      
+    } else if (event is PasswordChanged) {
+      yield* _mapPasswordChangedToState(event.password);
     } else if (event is LoginWithGooglePressed) {
       yield* _mapLogginWithGooglePressed();
     } else if (event is LoginWithCedentialsPressed) {
       yield* _mapLogginWithCredentialsPressedToState(
-        email: event.email, password: event.password,
+        email: event.email,
+        password: event.password,
       );
     }
   }
 
-  Stream<LoginState> _mapEmailChangedToState(String email) async*{
+  Stream<LoginState> _mapEmailChangedToState(String email) async* {
     yield currentState.update(
       isEmailValid: Validators.isValidEmail(email),
     );
   }
 
-  Stream<LoginState> _mapPasswordChangedToState(String password) async*{
+  Stream<LoginState> _mapPasswordChangedToState(String password) async* {
     yield currentState.update(
       isPasswordValid: Validators.isValidPassword(password),
     );
   }
 
-  Stream<LoginState> _mapLogginWithGooglePressed() async*{
-    try{
-      await _userRepository.signInWithGoogle();
+  Stream<LoginState> _mapLogginWithGooglePressed() async* {
+    try {
+      await _userRepository.signWithGoogle();
       yield LoginState.success();
-    } catch (_){
+    } catch (_) {
       yield LoginState.failure();
     }
   }
@@ -79,7 +80,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       await _userRepository.signInWithCredemtials(email, password);
       yield LoginState.success();
-    } catch(_) {
+    } catch (_) {
       yield LoginState.failure();
     }
   }
